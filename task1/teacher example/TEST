@@ -1,0 +1,8 @@
+MOV AX 101
+MOV BX 102
+MOV CX 49
+Begin: ADD
+INC 
+DEC 
+LOOP Begin
+HLT

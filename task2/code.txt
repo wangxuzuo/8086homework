@@ -1,0 +1,75 @@
+; 数据段
+DATA_SEG SEGMENT
+    ARR DB 04h,0f9h, 0f2h, 39h,05h ; 要排序的数据 
+    
+DATA_SEG ENDS
+ 
+; 代码段
+CODE_SEG SEGMENT
+START:
+    ASSUME CS:CODE_SEG, DS:DATA_SEG ; 建立段寄存器的对应关系
+
+    
+    MOV AX, DATA_SEG
+    MOV DS,AX
+    LEA SI ,ARR 			;将ARR地址村给SI
+    
+
+    
+    MOV CX, 5        ; CX计数器用于循环，初始值为5
+    MOV BX, 0			;BX用于遍历数组ARR
+    
+    LOOP1:
+        CMP CX, 1			;如果cx=0 
+JZ OutScreen		;跳转到OutScreen
+
+        
+        CMP BX ,4			;如果BX=4 一次遍历结束
+        JZ  SetBXZero 	;跳转到SetBXZero
+        
+        MOV DL, [SI+BX]		
+        
+        CMP DL,[SI+BX+1]   ;比较相邻数的大小如果
+        JNC  Swap
+        ;左边减右边如果没借位 即cf=0  那么left>=right就跳转到 swap 
+
+
+        INC BX				;BX++
+        JMP LOOP1		;跳转到LOOP1
+    
+
+
+
+
+    SetBXZero:				;置BX=0，CX减1
+        MOV BX ,0
+        DEC CX
+        JMP LOOP1		;跳转到LOOP1
+    
+    
+    Swap: 
+        XCHG DL,[SI+BX+1] ;交换这两个数
+        XCHG DL,[SI+BX]
+        INC BX 	;BX自增
+        JMP LOOP1
+        
+        
+    OutScreen:
+    ; 排序结束后，将排序结果存储到指定的变量中
+    MOV BL ,ARR[0]
+    MOV BH ,ARR[1]
+    MOV CL ,ARR[2]
+    MOV CH ,ARR[3]
+    MOV DL ,ARR[4]
+    
+
+    ; 程序结束
+    
+    INT 21H
+
+CODE_SEG ENDS
+END START
+
+
+
+
