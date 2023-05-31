@@ -1,0 +1,22 @@
+
+
+ 
+MoveToDX 100
+MoveToCX 50
+
+Start:Dec1CX 
+      Add   
+      Inc1DX
+      JumpNextIfCX0 Start; if cx not satisfy cx<0  jump to Start
+                         ; if cx<0 jump to continue (to WriteAX)
+
+ WriteAX
+
+
+    
+Stop
+
+
+
+
+

@@ -1,0 +1,13 @@
+MoveToDX 100
+MoveToCX 50
+
+Start:
+        Dec1CX
+        Add
+        Inc1DX
+        JumpIfCXs0 Start
+
+        WriteAX
+
+
+Stop
